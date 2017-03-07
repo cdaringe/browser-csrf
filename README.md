@@ -1,2 +1,36 @@
-# browser-csrf
-Inject CSRF tokens into your browser's network requests
+# browser-csrf :lock:
+
+inject csrf tokens into your browser's network calls.
+
+## what
+
+injects a token on each:
+
+- xhr request
+- form submission
+
+it can also perform the above injections in any `<iframe>`s one layer deep in your DOM.
+
+by default injections only happen on the current domain.
+
+## usage
+
+```js
+// example
+var bcsrf = require('browser-csrf')
+bcsrf.inject({ token: '<your-csrf-token>' })
+```
+
+this is a fairly simple example.  see the API docs for more.
+
+## api
+
+See the official [API Docs]().
+
+## why
+
+CSRF attacks are real.   Using an authorization token, such as a CSRF token, on each request from your native webapp helps prevent authorization spoofing.  Using cookies to store auth tokens generally works, but leaves your app vulnerable to malicious social engineering.  Malicious actors can lead your users to make network calls against your server using an _entirely different website_, via HTML forms or cross-origin javascript XHRs, exploiting the fact that your cookies will be passed along, even outside the context your website/domain!
+
+### example exploit
+
+See the `exploit/` directory for an easy to run, easy to understand example of CSRF.
