@@ -11,5 +11,32 @@
   },
   "dependencies": {
     "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "nsp": "^2.6.3",
+    "ripcord": "^0.25.7",
+    "standard": "^9.0.1"
+  },
+  "ripcord": {
+    "rules": [
+      "precommit-script",
+      "security-check-script",
+      "lint-script",
+      "api-docs-generate-script",
+      "api-docs-publish-script"
+    ]
+  },
+  "pre-commit": [
+    "lint",
+    "test",
+    "secure",
+    "docs"
+  ],
+  "scripts": {
+    "secure": "nsp check",
+    "lint": "standard",
+    "docs": "ripcord docs",
+    "docs-publish": "ripcord docs --publish",
+    "postpublish": "npm run docs-publish"
   }
 }
