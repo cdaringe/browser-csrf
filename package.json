@@ -13,6 +13,10 @@
     "lodash": "^4.17.4",
     "pify": "^2.3.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cdaringe/browser-csrf.git"
+  },
   "devDependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
@@ -21,6 +25,7 @@
     "ripcord": "^0.25.7",
     "selenium-standalone": "^6.0.1",
     "standard": "^9.0.1",
+    "wdio-sauce-service": "^0.3.1",
     "webdriverio": "^4.6.2",
     "webpack": "^2.2.1"
   },
