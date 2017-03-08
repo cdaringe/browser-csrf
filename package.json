@@ -11,23 +11,22 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
-    "pify": "^2.3.0"
+    "pify": "^2.3.0",
+    "xhr": "^2.4.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/cdaringe/browser-csrf.git"
   },
   "devDependencies": {
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
+    "browserify": "^14.1.0",
     "nsp": "^2.6.3",
     "perish": "^1.0.1",
     "ripcord": "^0.25.7",
-    "selenium-standalone": "^6.0.1",
+    "sinon": "^1.17.7",
     "standard": "^9.0.1",
-    "wdio-sauce-service": "^0.3.1",
-    "webdriverio": "^4.6.2",
-    "webpack": "^2.2.1"
+    "tape": "^4.6.3",
+    "testem": "^1.15.0"
   },
   "ripcord": {
     "rules": [
@@ -45,14 +44,14 @@
     "docs"
   ],
   "scripts": {
-    "pretest": "webpack test/app/client-app.js test/app/public/browser-csrf.bundle.js",
-    "test": "node test/",
+    "clean": "rm test/index.bundle.js",
+    "test": "testem ci",
+    "test:debug": "browserify test/index.js -o test/index.bundle.js && echo 'open test/index.html, remove script comment. open dev tools'",
     "secure": "nsp check",
+    "prelint": "yarn run clean",
     "lint": "standard",
     "docs": "ripcord docs",
     "docs-publish": "ripcord docs --publish",
-    "postpublish": "npm run docs-publish",
-    "selenium:install": "selenium-standalone install",
-    "selenium:start": "selenium-standalone start"
+    "postpublish": "npm run docs-publish"
   }
 }

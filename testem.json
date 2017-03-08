@@ -1,0 +1,12 @@
+{
+  "framework": "tap",
+  "src_files_ignore": [
+    "test/index.bundle.js"
+  ],
+  "serve_files": [
+    "test/index.bundle.js"
+  ],
+  "serve_files_ignore": [],
+  "before_tests": "browserify test/index.js -o test/index.bundle.js",
+  "launch_in_dev": ["chrome", "firefox", "safari"]
+}
