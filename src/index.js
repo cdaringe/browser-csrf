@@ -29,6 +29,7 @@ var bcsrf = {
   },
 
   /**
+   * @method inject
    * @description inject CSRF header into each XHR request
    * @param {object} opts
    * @param {string} opts.token token injected into the header

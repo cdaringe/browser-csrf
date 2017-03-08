@@ -2,7 +2,8 @@
 logs
 *.log
 npm-debug.log*
-
+ripcord.log
+docs
 # Runtime data
 pids
 *.pid
