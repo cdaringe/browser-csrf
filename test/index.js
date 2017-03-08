@@ -36,6 +36,9 @@ tape('inject', function (t) {
     if (handled) return // concurrent xhrs may creep in here. just sniff one
     handled = true
     t.equal(this.status, 0, 'intercepted xhr')
+
+    // teardown
+    stub.restore()
     this.abort()
     bcsrf.deinject()
     t.pass('teardown')

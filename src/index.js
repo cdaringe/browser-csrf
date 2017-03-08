@@ -26,7 +26,7 @@ var bcsrf = {
 
     // remove injected nodes
     toArray(document.querySelectorAll('[name="' + this._headerName + '"]'))
-      .forEach(function (node) { node.remove() })
+    .forEach(function (node) { node.parentNode.removeChild(node) })
 
     // restore wrapped xhr
     XMLHttpRequest.prototype.send = this._xhrSend
