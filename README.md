@@ -2,6 +2,8 @@
 
 inject csrf tokens into your browser's network calls.
 
+[ ![Codeship Status for cdaringe/browser-csrf](https://app.codeship.com/projects/0e58fbf0-e5cb-0134-052a-32055ecf3473/status?branch=master)](https://app.codeship.com/projects/206665) ![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg)
+
 ## what
 
 injects a token on each:
@@ -34,3 +36,14 @@ CSRF attacks are real.   Using an authorization token, such as a CSRF token, on 
 ### example exploit
 
 See the `exploit/` directory for an easy to run, easy to understand example of CSRF.
+
+## contributing
+
+### tests
+
+the tests run the test suite in real browsers.
+
+- in dev, run selenium in the background:
+  - `yarn run selenium:install`
+  - `yarn run selenium:start`
+- `yarn test`

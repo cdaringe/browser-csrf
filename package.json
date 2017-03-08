@@ -10,12 +10,19 @@
     ]
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "pify": "^2.3.0"
   },
   "devDependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
     "nsp": "^2.6.3",
+    "perish": "^1.0.1",
     "ripcord": "^0.25.7",
-    "standard": "^9.0.1"
+    "selenium-standalone": "^6.0.1",
+    "standard": "^9.0.1",
+    "webdriverio": "^4.6.2",
+    "webpack": "^2.2.1"
   },
   "ripcord": {
     "rules": [
@@ -33,10 +40,14 @@
     "docs"
   ],
   "scripts": {
+    "pretest": "webpack test/app/client-app.js test/app/public/browser-csrf.bundle.js",
+    "test": "node test/",
     "secure": "nsp check",
     "lint": "standard",
     "docs": "ripcord docs",
     "docs-publish": "ripcord docs --publish",
-    "postpublish": "npm run docs-publish"
+    "postpublish": "npm run docs-publish",
+    "selenium:install": "selenium-standalone install",
+    "selenium:start": "selenium-standalone start"
   }
 }
