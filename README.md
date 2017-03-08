@@ -36,14 +36,3 @@ CSRF attacks are real.   Using an authorization token, such as a CSRF token, on 
 ### example exploit
 
 See the `exploit/` directory for an easy to run, easy to understand example of CSRF.
-
-## contributing
-
-### tests
-
-the tests run the test suite in real browsers.
-
-- in dev, run selenium in the background:
-  - `yarn run selenium:install`
-  - `yarn run selenium:start`
-- `yarn test`
