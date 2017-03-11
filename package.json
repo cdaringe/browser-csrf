@@ -24,6 +24,7 @@
     "perish": "^1.0.1",
     "ripcord": "^0.25.7",
     "selenium-standalone": "^6.0.1",
+    "selenium-webdriver": "^3.3.0",
     "standard": "^9.0.1",
     "wdio-sauce-service": "^0.3.1",
     "webdriverio": "^4.6.2",
