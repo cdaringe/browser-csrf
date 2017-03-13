@@ -54,7 +54,7 @@
   "scripts": {
     "clean": "rm test/index.bundle.js",
     "test:dev": "testem",
-    "test": "testem ci",
+    "test": "testem ci --port 8080",
     "test:debug": "browserify test/index.js -o test/index.bundle.js && echo 'open test/index.html, remove script comment. open dev tools'",
     "secure": "nsp check",
     "prelint": "yarn run clean",
