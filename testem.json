@@ -1,7 +1,7 @@
 {
   "framework": "mocha",
   "timeout": 5000,
-  "parallel": 1,
+  "parallel": 5,
   "disable_watching": true,
   "on_start": "./test/saucie-connect.js",
   "on_exit": "./test/saucie-disconnect.js",
@@ -15,7 +15,7 @@
   ],
   "serve_files_ignore": [],
   "before_tests": "browserify test/index.js -o test/index.bundle.js",
-  "launch_in_dev": ["chrome", "PhantomJS"],
+  "launch_in_dev": ["chrome", "PhantomJS", "firefox", "safari"],
   "launchers": {
     "SL_Chrome_Current": {
       "exe": "./node_modules/.bin/saucie",

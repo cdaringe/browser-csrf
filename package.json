@@ -48,12 +48,12 @@
   },
   "pre-commit": [
     "lint",
-    "test",
     "secure",
     "docs"
   ],
   "scripts": {
     "clean": "rm test/index.bundle.js",
+    "test:dev": "testem",
     "test": "testem ci",
     "test:debug": "browserify test/index.js -o test/index.bundle.js && echo 'open test/index.html, remove script comment. open dev tools'",
     "secure": "nsp check",
