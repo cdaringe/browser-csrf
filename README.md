@@ -2,9 +2,7 @@
 
 inject csrf tokens into your browser's network calls.
 
-[ ![Codeship Status for cdaringe/browser-csrf](https://app.codeship.com/projects/0e58fbf0-e5cb-0134-052a-32055ecf3473/status?branch=master)](https://app.codeship.com/projects/206665) ![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg)
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/wa11-e.svg)](https://saucelabs.com/u/wa11-e)
+[ ![Codeship Status for cdaringe/browser-csrf](https://app.codeship.com/projects/0e58fbf0-e5cb-0134-052a-32055ecf3473/status?branch=master)](https://app.codeship.com/projects/206665) ![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg) [![Sauce Test Status](https://saucelabs.com/browser-matrix/wa11-e.svg)](https://saucelabs.com/u/wa11-e)
 
 ## what
 
