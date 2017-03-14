@@ -61,7 +61,8 @@
     "lint": "standard",
     "docs": "ripcord docs",
     "docs-publish": "ripcord docs --publish",
-    "postpublish": "npm run docs-publish"
+    "postpublish": "npm run docs-publish",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "release": {
     "generateNotes": "./node_modules/@semantic-release/release-notes-generator",
