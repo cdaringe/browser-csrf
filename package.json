@@ -7,6 +7,9 @@
   "standard": {
     "globals": [
       "XMLHttpRequest"
+    ],
+    "env": [
+      "mocha"
     ]
   },
   "dependencies": {
@@ -19,10 +22,16 @@
     "url": "https://github.com/cdaringe/browser-csrf.git"
   },
   "devDependencies": {
+    "@semantic-release/condition-codeship": "^1.1.0",
+    "@semantic-release/release-notes-generator": "^2.0.0",
+    "assert": "^1.4.1",
     "browserify": "^14.1.0",
+    "mocha": "^3.2.0",
     "nsp": "^2.6.3",
     "perish": "^1.0.1",
     "ripcord": "^0.25.7",
+    "saucie": "^3.1.0",
+    "semantic-release": "^6.3.2",
     "sinon": "^1.17.7",
     "standard": "^9.0.1",
     "tape": "^4.6.3",
@@ -39,13 +48,13 @@
   },
   "pre-commit": [
     "lint",
-    "test",
     "secure",
     "docs"
   ],
   "scripts": {
     "clean": "rm test/index.bundle.js",
-    "test": "testem ci",
+    "test:dev": "testem",
+    "test": "testem ci --port 8080",
     "test:debug": "browserify test/index.js -o test/index.bundle.js && echo 'open test/index.html, remove script comment. open dev tools'",
     "secure": "nsp check",
     "prelint": "yarn run clean",
@@ -53,5 +62,11 @@
     "docs": "ripcord docs",
     "docs-publish": "ripcord docs --publish",
     "postpublish": "npm run docs-publish"
+  },
+  "release": {
+    "generateNotes": "./node_modules/@semantic-release/release-notes-generator",
+    "verifyConditions": [
+      "./node_modules/@semantic-release/condition-codeship"
+    ]
   }
 }

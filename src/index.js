@@ -5,27 +5,50 @@ var toArray = require('lodash/toArray')
 var assign = require('lodash/assign')
 
 /**
- * @module browser-csrf
+ * @constructor
+ * @class BrowserCSRF
+ * @param {object|string} opts options or token
+ * @param {string} opts.token token injected into the header
+ * @param {string} [opts.document] document to operate in. defaults to `document`
+ * @param {string} [opts.header] name of header. defaults to 'csrf-token'
+ * @param {number} [opts.pollInterval] poll interval used to sniff for <form> elements
+ *   on the page & inject CSRF fields. defaults to 1500ms
+ * @returns {undefined}
  */
-var bcsrf = {
+function BrowserCSRF (opts) {
+  assign(this, defaultState)
+  if (opts && typeof opts === 'string') opts = { token: opts }
+  if (!opts.token) throw new ReferenceError('missing token')
+  this._token = opts.token
+  if (opts.header) this._headerName = opts.header
+  if (opts.document) this._document = opts.document
+}
+
+var prototype = {
 
   /**
    * @private
    */
   _createCSRFInputNode: function () {
-    var node = document.createElement('input')
+    var node = this._document.createElement('input')
     node.hidden = true
     node.value = this._token
     node.name = this._headerName
     return node
   },
 
+  /**
+   * @method deinject
+   * @memberof BrowserCSRF
+   * @description undo CSRF injection
+   * @returns {undefined}
+   */
   deinject: function () {
     // deactivate poll
     clearInterval(this._formInjectPollInterval)
 
     // remove injected nodes
-    toArray(document.querySelectorAll('[name="' + this._headerName + '"]'))
+    toArray(this._document.querySelectorAll('[name="' + this._headerName + '"]'))
     .forEach(function (node) { node.parentNode.removeChild(node) })
 
     // restore wrapped xhr
@@ -37,19 +60,11 @@ var bcsrf = {
 
   /**
    * @method inject
-   * @description inject CSRF header into each XHR request
-   * @param {object|string} opts options or token
-   * @param {string} opts.token token injected into the header
-   * @param {string} [opts.header] name of header. defaults to 'csrf-token'
-   * @param {number} [opts.pollInterval] poll interval used to sniff for <form> elements
-   *   on the page & inject CSRF fields. defaults to 1500ms
+   * @memberof BrowserCSRF
+   * @description inject CSRF header into each XHR request & form submission
    * @returns {undefined}
    */
-  inject: function injectToken (opts) {
-    if (opts && typeof opts === 'string') opts = { token: opts }
-    if (!opts.token) throw new ReferenceError('missing token')
-    this._token = opts.token
-    if (opts.header) this._headerName = opts.header
+  inject: function injectToken () {
     if (!this._hasWrappedXHR) {
       this._wrapXHR()
       this._hasWrappedXHR = true
@@ -66,7 +81,7 @@ var bcsrf = {
    */
   _injectFormSniffing: function () {
     var pollForForms = bind(function pollForForms () {
-      var forms = toArray(document.getElementsByTagName('form'))
+      var forms = toArray(this._document.getElementsByTagName('form'))
       forms.forEach(bind(function maybeAddOrUpdateCSRFNode (form) {
         var csrfNode = form.querySelectorAll('[name="' + this._headerName + '"]')[0]
         if (!csrfNode) csrfNode = this._createCSRFInputNode()
@@ -93,6 +108,7 @@ var bcsrf = {
 }
 
 var defaultState = {
+  _document: document,
   _formInjectPoll: null,
   _formInjectPollInterval: 1500,
   _hasWrappedXHR: false,
@@ -101,7 +117,6 @@ var defaultState = {
   _token: null,
   _xhrSend: null
 }
-assign(bcsrf, defaultState)
+assign(BrowserCSRF.prototype, prototype)
 
-for (var key in bcsrf) if (typeof bcsrf[key] === 'function') bcsrf[key] = bind(bcsrf[key], bcsrf)
-module.exports = bcsrf
+module.exports = BrowserCSRF

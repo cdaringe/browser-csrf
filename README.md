@@ -2,7 +2,7 @@
 
 inject csrf tokens into your browser's network calls.
 
-[ ![Codeship Status for cdaringe/browser-csrf](https://app.codeship.com/projects/0e58fbf0-e5cb-0134-052a-32055ecf3473/status?branch=master)](https://app.codeship.com/projects/206665) ![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg)
+[ ![Codeship Status for cdaringe/browser-csrf](https://app.codeship.com/projects/0e58fbf0-e5cb-0134-052a-32055ecf3473/status?branch=master)](https://app.codeship.com/projects/206665) ![](https://img.shields.io/badge/standardjs-%E2%9C%93-brightgreen.svg) [![Sauce Test Status](https://saucelabs.com/browser-matrix/wa11-e.svg)](https://saucelabs.com/u/wa11-e)
 
 ## what
 
@@ -11,16 +11,15 @@ injects a token on each:
 - xhr request
 - form submission
 
-it can also perform the above injections in any `<iframe>`s one layer deep in your DOM.
-
 by default injections only happen on the current domain.
 
 ## usage
 
 ```js
 // example
-var bcsrf = require('browser-csrf')
-bcsrf.inject({ token: '<your-csrf-token>' })
+var BrowserCSRF = require('browser-csrf')
+var bcsrf = new BrowserCSRF({ token: '<your-csrf-token>' })
+bcsrf.inject()
 ```
 
 this is a fairly simple example.  see the API docs for more.
@@ -33,17 +32,10 @@ See the official [API Docs]().
 
 CSRF attacks are real.   Using an authorization token, such as a CSRF token, on each request from your native webapp helps prevent authorization spoofing.  Using cookies to store auth tokens generally works, but leaves your app vulnerable to malicious social engineering.  Malicious actors can lead your users to make network calls against your server using an _entirely different website_, via HTML forms or cross-origin javascript XHRs, exploiting the fact that your cookies will be passed along, even outside the context your website/domain!
 
+## how
+
+how we do this is controversial!  we override the `XMLHttpRequest.prototype.send` method, add a header, & reproxy through to the original method.  if you are not comfortable with this, this module isn't for you!
+
 ### example exploit
 
 See the `exploit/` directory for an easy to run, easy to understand example of CSRF.
-
-## contributing
-
-### tests
-
-the tests run the test suite in real browsers.
-
-- in dev, run selenium in the background:
-  - `yarn run selenium:install`
-  - `yarn run selenium:start`
-- `yarn test`
