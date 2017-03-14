@@ -11,8 +11,6 @@ injects a token on each:
 - xhr request
 - form submission
 
-by default injections only happen on the current domain.
-
 ## usage
 
 ```js
