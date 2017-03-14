@@ -26,7 +26,7 @@ this is a fairly simple example.  see the API docs for more.
 
 ## api
 
-See the official [API Docs](https://cdaringe.github.io/browesr-csrf).
+See the official [API Docs](https://cdaringe.github.io/browser-csrf/).
 
 ## why
 
