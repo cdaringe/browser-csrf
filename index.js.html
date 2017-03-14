@@ -124,9 +124,11 @@ var prototype = {
       var forms = toArray(this._document.getElementsByTagName('form'))
       forms.forEach(bind(function maybeAddOrUpdateCSRFNode (form) {
         var csrfNode = form.querySelectorAll('[name="' + this._headerName + '"]')[0]
-        if (!csrfNode) csrfNode = this._createCSRFInputNode()
+        if (!csrfNode) {
+          csrfNode = this._createCSRFInputNode()
+          form.appendChild(csrfNode)
+        }
         csrfNode.value = this._token
-        form.appendChild(csrfNode)
       }, this))
     }, this)
     pollForForms()
