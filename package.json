@@ -3,6 +3,10 @@
   "description": "Inject CSRF tokens into your browser's network requests",
   "version": "0.0.1",
   "main": "src/index.js",
+  "files": [
+    "browser-csrf.dist.js",
+    "src"
+  ],
   "license": "MIT",
   "standard": {
     "ignore": [
