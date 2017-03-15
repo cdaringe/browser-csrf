@@ -40,3 +40,26 @@ how we do this is controversial!  we override the `XMLHttpRequest.prototype.send
 ### example exploit
 
 See the `exploit/` directory for an easy to run, easy to understand example of CSRF.
+
+here's how you can use the demo:
+
+- launch **both servers**, `node exploit/<malicious/vulnerable>/src/index.js`
+- open a browser to `localhost:7777`
+  - log into the fake bank using the displayed credentials
+  - simulate some fund transfers (the ui makes this clear how to do, hopefully :))
+  - observe the exploit link at the bottom of the page.  **click it**
+    - this link opens a website from the **malicious server**, and makes your browser execute a command against the **vulnerable server** on your behalf, unbeknownst to you!  this is the very essence of a CSRF!
+
+hopefully you can see that another site's ability to issue a command on a completely different site using an existing authenticated session is _a big deal_.  so, how can we fix it?  OWASP [has some great documentation](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) on how the attack vectors work.  they also provide some basic mechanisms on how to thwart the attack vector from the browser.  however, the **browser solutions they provide are not very robust for modern native webapps**.  this `browser-csrf` fills that gap.
+
+what we will do now is tell our vulnerable server to sniff for CSRF tokens.
+
+- kill the current vulnerable server
+- reboot the vulnerable server as such, `CSRF_PROTECTION=true node exploit/vulnerable/src/index.js`
+  - re-navigate to `localhost:7777`
+  - on login, the server provides a CSRF token
+  - our browser code, post-login, sets up `browser-csrf` to make sure each network request gets the token injected into request headers
+  - our server will now sniff for CSRF tokens on each request that requires authentication
+- repeat the above banking processes
+  - observe fund transfers work fine!
+  - observe the CSRF attack thwarted from the malicious site!

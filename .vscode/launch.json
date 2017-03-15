@@ -19,8 +19,17 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Test App Server",
-      "program": "${workspaceRoot}/test/app/index.js"
+      "name": "Vulnerable Server",
+      "program": "${workspaceRoot}/exploit/vulnerable/src/index.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Protected Server",
+      "program": "${workspaceRoot}/exploit/vulnerable/src/index.js",
+      "env": {
+        "CSRF_PROTECTION": "true"
+      }
     },
     {
       "type": "node",
