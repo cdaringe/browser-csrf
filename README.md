@@ -12,8 +12,6 @@ injects a token on each:
 - fetch request
 - form submission
 
-by default injections only happen on the current domain.
-
 ## usage
 
 ```js
@@ -31,7 +29,7 @@ See the official [API Docs](https://cdaringe.github.io/browser-csrf/).
 
 ## why
 
-CSRF attacks are real.   Using an authorization token, such as a CSRF token, on each request from your native webapp helps prevent authorization spoofing.  Using cookies to store auth tokens generally works, but leaves your app vulnerable to malicious social engineering.  Malicious actors can lead your users to make network calls against your server using an _entirely different website_, via HTML forms or cross-origin javascript XHRs, exploiting the fact that your cookies will be passed along, even outside the context your website/domain!
+CSRF attacks are real.   Using an authorization token on each request (such as a CSRF token) helps prevent unauthorization command execution.  Using cookies to store auth tokens generally works, but leaves your app vulnerable to malicious social engineering.  Malicious actors can lead your users to make network calls against your server using an _entirely different website_, via HTML forms or cross-origin javascript XHRs, exploiting the fact that your cookies will be passed along, even outside the context your website/domain!
 
 ## how
 
