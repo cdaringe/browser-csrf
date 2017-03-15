@@ -54,6 +54,9 @@ var prototype = {
     // restore wrapped xhr
     XMLHttpRequest.prototype.send = this._xhrSend
 
+    // restore wrapped fetch
+    if (window.fetch) window.fetch = this._fetch
+
     // restore default state
     assign(this, defaultState)
   },
@@ -68,6 +71,10 @@ var prototype = {
     if (!this._hasWrappedXHR) {
       this._wrapXHR()
       this._hasWrappedXHR = true
+    }
+    if (window.fetch && !this._hasWrappedFetch) {
+      this._wrapFetch()
+      this._hasWrappedFetch = true
     }
     if (!this._hasInjectedFormSniffing) {
       this._injectFormSniffing()
@@ -98,6 +105,21 @@ var prototype = {
   /**
    * @private
    */
+  _wrapFetch: function () {
+    if (!fetch) return
+    this._fetch = window.fetch
+    var self = this
+    window.fetch = function injectCSRFHeaderOnFetch (url, opts) {
+      opts = opts || {}
+      opts.headers = opts.headers || {}
+      opts.headers[self._headerName] = self._token
+      return self._fetch.apply(this, arguments)
+    }
+  },
+
+  /**
+   * @private
+   */
   _wrapXHR: function () {
     if (!XMLHttpRequest) throw new Error('browser does not permit XHRs. please use a modern browser')
     this._xhrSend = XMLHttpRequest.prototype.send
@@ -111,8 +133,10 @@ var prototype = {
 
 var defaultState = {
   _document: document,
+  _fetch: null,
   _formInjectPoll: null,
   _formInjectPollInterval: 1500,
+  _hasWrappedFetch: false,
   _hasWrappedXHR: false,
   _hasInjectedFormSniffing: false,
   _headerName: 'csrf-token',

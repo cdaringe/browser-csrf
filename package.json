@@ -5,7 +5,11 @@
   "main": "src/index.js",
   "license": "MIT",
   "standard": {
+    "ignore": [
+      "exploit"
+    ],
     "globals": [
+      "fetch",
       "XMLHttpRequest"
     ],
     "env": [
@@ -25,7 +29,9 @@
     "@semantic-release/condition-codeship": "^1.1.0",
     "@semantic-release/release-notes-generator": "^2.0.0",
     "assert": "^1.4.1",
+    "body-parser": "^1.17.1",
     "browserify": "^14.1.0",
+    "cookie-parser": "^1.4.3",
     "mocha": "^3.2.0",
     "nsp": "^2.6.3",
     "perish": "^1.0.1",
@@ -35,7 +41,8 @@
     "sinon": "^1.17.7",
     "standard": "^9.0.1",
     "tape": "^4.6.3",
-    "testem": "^1.15.0"
+    "testem": "^1.15.0",
+    "webpack": "^2.2.1"
   },
   "ripcord": {
     "rules": [
@@ -52,6 +59,7 @@
     "docs"
   ],
   "scripts": {
+    "build": "webpack --output-library BrowserCSRF src/index.js browser-csrf.dist.js",
     "clean": "rm test/index.bundle.js",
     "test:dev": "testem",
     "test": "testem ci --port 8080",

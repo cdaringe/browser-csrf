@@ -9,6 +9,7 @@ inject csrf tokens into your browser's network calls.
 injects a token on each:
 
 - xhr request
+- fetch request
 - form submission
 
 by default injections only happen on the current domain.
