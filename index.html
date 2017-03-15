@@ -52,6 +52,7 @@
 <h2>what</h2><p>injects a token on each:</p>
 <ul>
 <li>xhr request</li>
+<li>fetch request</li>
 <li>form submission</li>
 </ul>
 <h2>usage</h2><pre class="prettyprint source lang-js"><code>// example
@@ -61,7 +62,37 @@ bcsrf.inject()</code></pre><p>this is a fairly simple example.  see the API docs
 <h2>api</h2><p>See the official <a href="https://cdaringe.github.io/browser-csrf/">API Docs</a>.</p>
 <h2>why</h2><p>CSRF attacks are real.   Using an authorization token on each request (such as a CSRF token) helps prevent unauthorization command execution.  Using cookies to store auth tokens generally works, but leaves your app vulnerable to malicious social engineering.  Malicious actors can lead your users to make network calls against your server using an <em>entirely different website</em>, via HTML forms or cross-origin javascript XHRs, exploiting the fact that your cookies will be passed along, even outside the context your website/domain!</p>
 <h2>how</h2><p>how we do this is controversial!  we override the <code>XMLHttpRequest.prototype.send</code> method, add a header, &amp; reproxy through to the original method.  if you are not comfortable with this, this module isn't for you!</p>
-<h3>example exploit</h3><p>See the <code>exploit/</code> directory for an easy to run, easy to understand example of CSRF.</p></article>
+<h3>example exploit</h3><p>See the <code>exploit/</code> directory for an easy to run, easy to understand example of CSRF.</p>
+<p>here's how you can use the demo:</p>
+<ul>
+<li>launch <strong>both servers</strong>, <code>node exploit/&lt;malicious/vulnerable&gt;/src/index.js</code></li>
+<li>open a browser to <code>localhost:7777</code><ul>
+<li>log into the fake bank using the displayed credentials</li>
+<li>simulate some fund transfers (the ui makes this clear how to do, hopefully :))</li>
+<li>observe the exploit link at the bottom of the page.  <strong>click it</strong><ul>
+<li>this link opens a website from the <strong>malicious server</strong>, and makes your browser execute a command against the <strong>vulnerable server</strong> on your behalf, unbeknownst to you!  this is the very essence of a CSRF!</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>hopefully you can see that another site's ability to issue a command on a completely different site using an existing authenticated session is <em>a big deal</em>.  so, how can we fix it?  OWASP <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF">has some great documentation</a>) on how the attack vectors work.  they also provide some basic mechanisms on how to thwart the attack vector from the browser.  however, the <strong>browser solutions they provide are not very robust for modern native webapps</strong>.  this <code>browser-csrf</code> fills that gap.</p>
+<p>what we will do now is tell our vulnerable server to sniff for CSRF tokens.</p>
+<ul>
+<li>kill the current vulnerable server</li>
+<li>reboot the vulnerable server as such, <code>CSRF_PROTECTION=true node exploit/vulnerable/src/index.js</code><ul>
+<li>re-navigate to <code>localhost:7777</code></li>
+<li>on login, the server provides a CSRF token</li>
+<li>our browser code, post-login, sets up <code>browser-csrf</code> to make sure each network request gets the token injected into request headers</li>
+<li>our server will now sniff for CSRF tokens on each request that requires authentication</li>
+</ul>
+</li>
+<li>repeat the above banking processes<ul>
+<li>observe fund transfers work fine!</li>
+<li>observe the CSRF attack thwarted from the malicious site!</li>
+</ul>
+</li>
+</ul></article>
     </section>
 
 
