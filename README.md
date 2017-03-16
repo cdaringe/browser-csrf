@@ -39,6 +39,8 @@ how we do this is controversial!  we override the `XMLHttpRequest.prototype.send
 
 See the `exploit/` directory for an easy to run, easy to understand example of CSRF.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rMfvVTugxew?ecver=1" frameborder="0" allowfullscreen></iframe>
+
 here's how you can use the demo:
 
 - launch **both servers**, `node exploit/<malicious/vulnerable>/src/index.js`
