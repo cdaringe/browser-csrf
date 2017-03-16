@@ -63,6 +63,8 @@ bcsrf.inject()</code></pre><p>this is a fairly simple example.  see the API docs
 <h2>why</h2><p>CSRF attacks are real.   Using an authorization token on each request (such as a CSRF token) helps prevent unauthorization command execution.  Using cookies to store auth tokens generally works, but leaves your app vulnerable to malicious social engineering.  Malicious actors can lead your users to make network calls against your server using an <em>entirely different website</em>, via HTML forms or cross-origin javascript XHRs, exploiting the fact that your cookies will be passed along, even outside the context your website/domain!</p>
 <h2>how</h2><p>how we do this is controversial!  we override the <code>XMLHttpRequest.prototype.send</code> method, add a header, &amp; reproxy through to the original method.  if you are not comfortable with this, this module isn't for you!</p>
 <h3>example exploit</h3><p>See the <code>exploit/</code> directory for an easy to run, easy to understand example of CSRF.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rMfvVTugxew?ecver=1" frameborder="0" allowfullscreen></iframe>
+
 <p>here's how you can use the demo:</p>
 <ul>
 <li>launch <strong>both servers</strong>, <code>node exploit/&lt;malicious/vulnerable&gt;/src/index.js</code></li>
