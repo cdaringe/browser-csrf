@@ -29,11 +29,11 @@ See the official [API Docs](https://cdaringe.github.io/browser-csrf/).
 
 ## why
 
-CSRF attacks are real.   Using an authorization token on each request (such as a CSRF token) helps prevent unauthorization command execution.  Using cookies to store auth tokens generally works, but leaves your app vulnerable to malicious social engineering.  Malicious actors can lead your users to make network calls against your server using an _entirely different website_, via HTML forms or cross-origin javascript XHRs, exploiting the fact that your cookies will be passed along, even outside the context your website/domain!
+CSRF attacks are real.   Using an authorization token on each request (such as a CSRF token) helps prevent unauthorized command execution.  Using cookies to store auth tokens generally works, but leaves your app vulnerable to malicious social engineering.  Malicious actors can lead your users to make network calls against your server using an _entirely different website_, via HTML forms or cross-origin javascript XHRs, exploiting the fact that cookies will be passed along, even outside the context of your website/domain!  Therefore, logged in users who browse to other sites or click malicious links could perform acts on your website, unbeknownst to them.  See https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet.
 
 ## how
 
-how we do this is controversial!  we override the `XMLHttpRequest.prototype.send` method, add a header, & reproxy through to the original method.  if you are not comfortable with this, this module isn't for you!
+how we do this is controversial!  we override the some `<network-object>.prototype` methods, add a header, & reproxy through to the original method.  the offense is minimal & shouldn't affect normal usage.  if you are not comfortable with this, this module isn't for you!  it is, however, robust for those who don't have easy access to every network that call their app is making.
 
 ### example exploit
 
