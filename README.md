@@ -39,7 +39,7 @@ how we do this is controversial!  we override the some `<network-object>.prototy
 
 See the `exploit/` directory for an easy to run, easy to understand example of CSRF.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rMfvVTugxew?ecver=1" frameborder="0" allowfullscreen></iframe>
+<a href="https://www.youtube.com/embed/rMfvVTugxew?ecver=1"><img width="400px" src="https://github.com/cdaringe/browser-csrf/blob/master/img/video-thumb.png?raw=true" /></a>
 
 here's how you can use the demo:
 
